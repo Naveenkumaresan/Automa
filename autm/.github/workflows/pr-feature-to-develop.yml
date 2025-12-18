@@ -1,0 +1,34 @@
+name: PR checks & automerge to develop
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  test-and-automerge:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Enable auto-merge
+        if: success() && github.actor != 'dependabot[bot]'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          merge-method: squash
