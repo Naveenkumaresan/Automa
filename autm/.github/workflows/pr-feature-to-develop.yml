@@ -32,19 +32,3 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           merge-method: squash
-
-      - name: Send success email to team
-        if: success() && github.actor != 'dependabot[bot]'
-        uses: dawidd6/action-send-mail@v2
-        with:
-          server_address: smtp.gmail.com          # change if not Gmail
-          server_port: 465
-          username: ${{ secrets.EMAIL_USERNAME }} # set in repo secrets
-          password: ${{ secrets.EMAIL_PASSWORD }} # set in repo secrets
-          subject: "PR to develop passed & auto-merge enabled"
-          to: "team1@example.com,team2@example.com"  # change to your team emails
-          from: "ci-bot@example.com"
-          body: |
-            Pull Request to develop passed all checks and auto-merge is enabled.
-            Repository: ${{ github.repository }}
-            PR:        ${{ github.event.pull_request.html_url }}
