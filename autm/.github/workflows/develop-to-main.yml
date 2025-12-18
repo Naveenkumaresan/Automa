@@ -3,7 +3,7 @@ name: PR checks & automerge to main
 on:
   pull_request:
     branches:
-      - main      # ← Now handles PRs to main
+      - main     
 
 jobs:
   test-and-automerge:
