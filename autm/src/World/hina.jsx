@@ -2,7 +2,7 @@ import React from 'react'
 
 function hina() {
   return (
-    <div>hina huyt</div>
+    <div>hina huytv hina</div>
   )
 }
 
