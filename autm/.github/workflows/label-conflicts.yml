@@ -1,0 +1,24 @@
+name: Label PRs with conflicts
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  check-conflicts:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for merge conflicts
+        uses: olivernybroe/action-conflict-finder@v3
+
+      - name: Add conflict label if needed
+        if: failure()   # conflict-finder marks job failed when conflicts exist
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: "has-conflicts"

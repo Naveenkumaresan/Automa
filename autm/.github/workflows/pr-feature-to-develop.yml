@@ -27,6 +27,7 @@ jobs:
         run: npm test
 
       - name: Enable auto-merge
+        # only if tests passed and PR has no conflicts in GitHub
         if: success() && github.actor != 'dependabot[bot]'
         uses: peter-evans/enable-pull-request-automerge@v3
         with:
